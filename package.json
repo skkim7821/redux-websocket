@@ -1,5 +1,5 @@
 {
-  "name": "skkim7821/redux-websocket",
+  "name": "@skkim7821/redux-websocket",
   "version": "0.0.1",
   "description": "A redux middleware to handle websocket connections",
   "main": "dist/index.js",
