@@ -23,6 +23,7 @@ const createMiddleware = () => {
   /**
    * A function to create the WebSocket object and attach the standard callbacks
    */
+  let i = 0;
   const initialize = ({ dispatch }, config: Config) => {
     // Instantiate the websocket.
     websocket = createWebsocket(config);
@@ -36,6 +37,8 @@ const createMiddleware = () => {
     websocket.onclose = () => {
       dispatchAction(closed);
       initialize({ dispatch }, config);
+      i++;
+      console.log('i', i);
     }
     
     websocket.onmessage = dispatchAction(message);
