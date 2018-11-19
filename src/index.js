@@ -33,7 +33,11 @@ const createMiddleware = () => {
     // Setup handlers to be called like this:
     // dispatch(open(event));
     websocket.onopen = dispatchAction(open);
-    websocket.onclose = dispatchAction(closed);
+    websocket.onclose = () => {
+      dispatchAction(closed);
+      initialize({ dispatch }, config);
+    }
+    
     websocket.onmessage = dispatchAction(message);
 
     // An optimistic callback assignment for WebSocket objects that support this
