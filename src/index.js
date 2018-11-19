@@ -50,6 +50,7 @@ const createMiddleware = () => {
     if (websocket) {
       console.warn(`Closing WebSocket connection to ${websocket.url} ...`);
       websocket.close();
+      websocket.terminate();
       websocket = null;
     }
   };
