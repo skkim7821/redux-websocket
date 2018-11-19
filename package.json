@@ -1,6 +1,6 @@
 {
   "name": "@skkim7821/redux-websocket",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A redux middleware to handle websocket connections",
   "main": "dist/index.js",
   "directories": {
@@ -52,6 +52,7 @@
     "testdouble": "3.8.2"
   },
   "dependencies": {
-    "lodash": "4.17.11"
+    "lodash": "4.17.11",
+    "throttle-debounce": "^2.0.1"
   }
 }

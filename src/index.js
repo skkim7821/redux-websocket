@@ -15,6 +15,7 @@ export const WEBSOCKET_CONNECTING = 'WEBSOCKET:CONNECTING';
 export const WEBSOCKET_OPEN = 'WEBSOCKET:OPEN';
 export const WEBSOCKET_CLOSED = 'WEBSOCKET:CLOSED';
 export const WEBSOCKET_MESSAGE = 'WEBSOCKET:MESSAGE';
+import { throttle, debounce } from 'throttle-debounce';
 
 const createMiddleware = () => {
   // Hold a reference to the WebSocket instance in use.
@@ -36,9 +37,12 @@ const createMiddleware = () => {
     websocket.onopen = dispatchAction(open);
     websocket.onclose = () => {
       dispatchAction(closed);
-      initialize({ dispatch }, config);
-      i++;
-      console.log('i', i);
+      throttle(30000, function () {
+        initialize({ dispatch }, config);
+        i++;
+        console.log('i', i);
+      });
+      
     }
     
     websocket.onmessage = dispatchAction(message);
