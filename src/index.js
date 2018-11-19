@@ -24,7 +24,6 @@ const createMiddleware = () => {
   /**
    * A function to create the WebSocket object and attach the standard callbacks
    */
-  let i = 0;
   const initialize = ({ dispatch }, config: Config) => {
     // Instantiate the websocket.
     websocket = createWebsocket(config);
@@ -36,13 +35,10 @@ const createMiddleware = () => {
     // dispatch(open(event));
     websocket.onopen = dispatchAction(open);
     websocket.onclose = () => {
-      dispatchAction(closed);
-      throttle(30000, function () {
-        initialize({ dispatch }, config);
-        i++;
-        console.log('i', i);
-      });
-      
+      dispatchAction(closed)();
+      setTimeout(() => {
+        initialize({ dispatch }, config); 
+      }, config.interval || 30000);
     }
     
     websocket.onmessage = dispatchAction(message);
@@ -61,7 +57,6 @@ const createMiddleware = () => {
     if (websocket) {
       console.warn(`Closing WebSocket connection to ${websocket.url} ...`);
       websocket.close();
-      websocket.terminate();
       websocket = null;
     }
   };
